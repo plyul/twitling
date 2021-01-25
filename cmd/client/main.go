@@ -5,10 +5,10 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"log"
-	"miniTwitter/gen/model"
+	"twitling/internal/model"
 )
 
-const userId = 1
+const userId = 1 //nolint
 
 var texts = [...]string{
 	"Hello there. Thanks for the follow. Did you notice, that I am an egg? A talking egg? Damn!",
@@ -23,9 +23,11 @@ var texts = [...]string{
 func main() {
 	var jl, pl float64
 	for account, text := range texts {
-		m := model.Message{
-			Id:   int64(account),
+		m := model.PostDTO{
 			Text: text,
+			ReplyTo: 0,
+			ToUser: int64(account),
+			PublishAt: nil,
 		}
 		protobufString, err := proto.Marshal(&m)
 		if err != nil {
