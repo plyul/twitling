@@ -1,22 +1,20 @@
 syntax = "proto3";
-package internal.model.v1;
-option go_package = "internal/model";
+
+package model.v1;
 
 import "google/protobuf/timestamp.proto";
+
+option go_package = "internal/model";
+
 
 message User {
   string name = 2; // Имя пользователя
   repeated int64 following = 3; // Список пользователей, за которыми следует (следит, подписан) данный пользователь
 }
 
-message Post {
-  int64 id = 1; // Уникальный идентификатор сообщения
-  PostDTO post = 2;
-}
-
 message State {
   map<int64, User> users = 1; // Список пользователей
-  map<int64, Post> messages = 2; // Список post
+  map<int64, PostDTO> posts = 2; // Список постов
 }
 
 message PostDTO {
