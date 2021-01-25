@@ -4,7 +4,7 @@ package model.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "internal/model";
+option go_package = "/model";
 
 
 message User {

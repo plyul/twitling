@@ -5,7 +5,7 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"log"
-	"twitling/internal/model"
+	"twitling/generated/model"
 )
 
 const userId = 1 //nolint

@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"log"
 	"os"
-	"twitling/internal/model"
+	"twitling/generated/model"
 )
 
 var state = model.State{ //nolint
