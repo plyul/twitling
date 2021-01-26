@@ -9,11 +9,11 @@ help: ## Показать подсказку
 
 .PHONY: docker-builder
 docker-builder:
-	docker build -t $(GO_WORKBENCH_DOCKER_IMAGE_NAME) -f build/Dockerfile .
+	docker build -t "$(GO_WORKBENCH_DOCKER_IMAGE)" -f build/Dockerfile .
 
 .PHONY: gen_proto
 gen_proto: docker-builder ## Сгенерировать код по спецификациям Protocol Buffer
-	docker run --rm -v $(PWD):/app $(GO_WORKBENCH_DOCKER_IMAGE_NAME) /app/build/build.sh
+	docker run --rm -v $(PWD):/app "$(GO_WORKBENCH_DOCKER_IMAGE)" /app/build/build.sh
 	sudo chown -R $(shell id -un):$(shell id -un) .
 
 .PHONY: go_mod
@@ -23,4 +23,4 @@ go_mod:
 
 .PHONY: lint
 lint: gen_proto ## Линтинг исходного кода
-	docker run --rm -v $(shell pwd):/app:ro -w /app $(GO_WORKBENCH_DOCKER_IMAGE_NAME) golangci-lint -v run ./...
+	docker run --rm -v $(shell pwd):/app:ro -w /app "$(GO_WORKBENCH_DOCKER_IMAGE)" golangci-lint -v run ./...
