@@ -1,9 +1,9 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"google.golang.org/grpc"
+	"io"
 	"log"
 	"net"
 	"twitling/generated/api"
@@ -15,26 +15,36 @@ const (
 )
 
 type server struct {
-	api.UnimplementedMessagingServiceServer
+	api.UnimplementedMessagingAPIServer
 }
 
-func (s *server) Ping(_ context.Context, req *api.PingRequest) (*api.PingResponse, error) {
-	log.Printf("api.Ping called with arg: %v", req)
-	return &api.PingResponse{
-		Response: req.Challenge,
-	}, nil
+func (s *server) Notification(stream api.MessagingAPI_NotificationServer) error {
+	log.Println("api.Notification начинает работу")
+	for {
+		note, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		log.Printf("Получил донесение: %s", note.Text)
+		if err := stream.Send(&api.Note{Text: fmt.Sprintf("ack: %s", note.Text)}); err != nil {
+			log.Printf("ошибка при отправке ответного донесения: %v", err)
+		}
+	}
 }
 
 func main() {
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", apiAddress, apiPort))
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatalf("ошибка при попытке установки слушателя: %v", err)
 	}
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
-	api.RegisterMessagingServiceServer(grpcServer, &server{})
+	api.RegisterMessagingAPIServer(grpcServer, &server{})
 	if err := grpcServer.Serve(listener); err != nil {
-		log.Fatalf("gRPC server error: %v", err)
+		log.Fatalf("ошибка при запуске сервера gRPC: %v", err)
 	}
 }
 

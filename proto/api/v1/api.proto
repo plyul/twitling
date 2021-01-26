@@ -6,16 +6,15 @@ import "model/v1/model.proto";
 
 option go_package = "twitling/generated/api";
 
-message PingRequest {
-  string challenge = 1;
+message Note {
+  string text = 1;
 }
 
-message PingResponse {
-  string response = 1;
-}
-
-service MessagingService {
-  rpc Ping(PingRequest) returns (PingResponse) {}
+service MessagingAPI {
+  //buf:lint:ignore RPC_REQUEST_STANDARD_NAME
+  //buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  //buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+  rpc Notification(stream Note) returns (stream Note) {}
 
 //  rpc Login(LoginRequest) returns (LoginResponse) {}
 //  rpc Logout(LoginRequest) returns (LoginResponse) {}
