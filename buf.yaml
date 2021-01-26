@@ -5,3 +5,5 @@ build:
 lint:
   use:
     - DEFAULT
+  service_suffix: API
+  allow_comment_ignores: true
