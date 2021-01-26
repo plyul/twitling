@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package api.v1;
+
+import "model/v1/model.proto";
+
+option go_package = "twitling/generated/api";
+
+message PingRequest {
+  string challenge = 1;
+}
+
+message PingResponse {
+  string response = 1;
+}
+
+service MessagingService {
+  rpc Ping(PingRequest) returns (PingResponse) {}
+
+//  rpc Login(LoginRequest) returns (LoginResponse) {}
+//  rpc Logout(LoginRequest) returns (LoginResponse) {}
+
+//  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse) {}
+//  rpc DeletePost(DeletePostRequest) returns (DeletePostResponse) {}
+//  rpc GetPosts(GetPostsRequest) returns (GetPostsResponse) {}
+}

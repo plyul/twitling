@@ -4,7 +4,7 @@ package model.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "/model";
+option go_package = "twitling/generated/model";
 
 
 message User {
@@ -12,14 +12,14 @@ message User {
   repeated int64 following = 3; // Список пользователей, за которыми следует (следит, подписан) данный пользователь
 }
 
-message State {
-  map<int64, User> users = 1; // Список пользователей
-  map<int64, PostDTO> posts = 2; // Список постов
-}
-
-message PostDTO {
+message Post {
   string text = 1; // Текст сообщения
   int64 reply_to = 2; // Идентификатор сообщения, ответом на который является данное сообщение. Значение 0 значит, что это сообщение не ответ.
   int64 to_user = 3; // Идентификатор пользователя, для которого предназначен пост. Значение 0 значит публичное сообщение.
   google.protobuf.Timestamp publish_at = 4; // Дата публикации
+}
+
+message State {
+  map<int64, User> users = 1; // Список пользователей
+  map<int64, Post> posts = 2; // Список постов
 }
