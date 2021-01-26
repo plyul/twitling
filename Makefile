@@ -1,6 +1,6 @@
 .DEFAULT_GOAL: help
 
-GO_WORKBENCH_DOCKER_IMAGE_NAME = go-workbench
+GO_WORKBENCH_DOCKER_IMAGE = go-workbench:latest
 
 .PHONY: help
 help: ## Показать подсказку
@@ -22,5 +22,5 @@ go_mod:
 	go mod verify
 
 .PHONY: lint
-lint: gen_proto go_mod ## Линтинг исходного кода
-	docker run --rm -v $(shell pwd):/app:ro -w /app $(GO_WORKBENCH_DOCKER_IMAGE_NAME) golangci-lint run ./...
+lint: gen_proto ## Линтинг исходного кода
+	docker run --rm -v $(shell pwd):/app:ro -w /app $(GO_WORKBENCH_DOCKER_IMAGE_NAME) golangci-lint -v run ./...
