@@ -19,7 +19,7 @@ type server struct {
 }
 
 func (s *server) Notification(stream api.MessagingAPI_NotificationServer) error {
-	log.Println("api.Notification начинает работу")
+	log.Println("Function api.Notification was started")
 	for {
 		note, err := stream.Recv()
 		if err == io.EOF {
@@ -28,9 +28,9 @@ func (s *server) Notification(stream api.MessagingAPI_NotificationServer) error 
 		if err != nil {
 			return err
 		}
-		log.Printf("Получил донесение: %s", note.Text)
+		log.Printf("Got note: %s", note.Text)
 		if err := stream.Send(&api.Note{Text: fmt.Sprintf("ack: %s", note.Text)}); err != nil {
-			log.Printf("ошибка при отправке ответного донесения: %v", err)
+			log.Printf("Error sending reply: %v", err)
 		}
 	}
 }
@@ -38,13 +38,13 @@ func (s *server) Notification(stream api.MessagingAPI_NotificationServer) error 
 func main() {
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", apiAddress, apiPort))
 	if err != nil {
-		log.Fatalf("ошибка при попытке установки слушателя: %v", err)
+		log.Fatalf("Error establishing listener: %v", err)
 	}
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
 	api.RegisterMessagingAPIServer(grpcServer, &server{})
 	if err := grpcServer.Serve(listener); err != nil {
-		log.Fatalf("ошибка при запуске сервера gRPC: %v", err)
+		log.Fatalf("Error registering gRPC server: %v", err)
 	}
 }
 
