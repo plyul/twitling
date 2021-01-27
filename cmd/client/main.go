@@ -39,15 +39,17 @@ func main() {
 	for {
 		note, err := stream.Recv()
 		if err == io.EOF {
+			log.Println("Got EOF from server")
 			break
 		}
 		if err != nil {
+			log.Printf("Error receiving note: %v", err)
 			break
 		}
 		log.Printf("Got notification reply: %s", note.Text)
 		if note.Text == "ack: end" {
+			fmt.Println("All notes were delivered successfully")
 			break
 		}
 	}
-	fmt.Println("All notes were delivered successfully")
 }

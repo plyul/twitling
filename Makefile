@@ -13,7 +13,7 @@ docker-builder:
 
 .PHONY: gen_proto
 gen_proto: docker-builder ## Generate code based on protobuf specs
-	docker run --rm -v $(PWD):/app "$(GO_WORKBENCH_DOCKER_IMAGE)" /app/build/build.sh
+	docker run --rm -v $(PWD):/app "$(GO_WORKBENCH_DOCKER_IMAGE)" /app/build/compile-protobuf.sh
 	sudo chown -R $(shell id -un):$(shell id -un) .
 
 .PHONY: go_mod
