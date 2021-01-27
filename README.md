@@ -1,12 +1,5 @@
-# Учебный проект 'MiniTwitter'
+# Twitling
 
-```text
-Итерационно мы напишем MiniTwitter
-Функционал:
-- Текстовые посты
-- Ответы на посты
-- Возможность указать дату публикации в будущем
-- Приватные сообщения между пользователями 
-- Подписки (список читаемых пользователей)
-- Хранение сообщений in-memory, сериализация state в protobuf для persistence.
-```
+The goal of this project is to write twitter-like application in go.
+
+Educational project, not a serious business.  

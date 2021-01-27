@@ -8,18 +8,18 @@ option go_package = "twitling/generated/model";
 
 
 message User {
-  string name = 2; // Имя пользователя
-  repeated int64 following = 3; // Список пользователей, за которыми следует (следит, подписан) данный пользователь
+  string name = 2; // User name
+  repeated int64 following = 3; // List of users for which user is following
 }
 
 message Post {
-  string text = 1; // Текст сообщения
-  int64 reply_to = 2; // Идентификатор сообщения, ответом на который является данное сообщение. Значение 0 значит, что это сообщение не ответ.
-  int64 to_user = 3; // Идентификатор пользователя, для которого предназначен пост. Значение 0 значит публичное сообщение.
-  google.protobuf.Timestamp publish_at = 4; // Дата публикации
+  string text = 1; // Post text
+  int64 reply_to = 2; // ID of post to which this post is replied. Zero value means this is not a reply.
+  int64 to_user = 3; // ID of user for whom this post is intended. Zero value means public post.
+  google.protobuf.Timestamp publish_at = 4; // Publication date
 }
 
 message State {
-  map<int64, User> users = 1; // Список пользователей
-  map<int64, Post> posts = 2; // Список постов
+  map<int64, User> users = 1; // List of users
+  map<int64, Post> posts = 2; // List of posts
 }
